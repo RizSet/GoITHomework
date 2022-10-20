@@ -18,6 +18,12 @@ public class MyLinkedList<E> {
 
     public E remove(int index) {
         Node<E> curentNode = firstNode;
+        if (index == 0){
+            firstNode.nextNode.prevNode = null;
+            firstNode = firstNode.nextNode;
+            size--;
+            return curentNode.value;
+        }
         if (index > size - 1) {
             throw new IndexOutOfBoundsException("You are out of LinkedList");
         }

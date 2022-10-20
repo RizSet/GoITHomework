@@ -10,11 +10,16 @@ public class MyHashMap<K, E> {
         if (key == null) {
             return 0;
         }
-        return Math.abs(key.hashCode()) / (Integer.MAX_VALUE / 15) + 1;
+        return (arrayEntry.length - 1) & hash(key);
+    }
+
+    static final int hash(Object key) {
+        int h;
+        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
 
     public void put(K key, E value) {
-        arrayEntry[countBuket((E) key)] = new Entry<>(key, value, arrayEntry[countBuket((E) key)], key.hashCode());
+        arrayEntry[countBuket((E) key)] = new Entry<>(key, value, arrayEntry[countBuket((E) key)], hashCode());
         size++;
     }
 
@@ -83,7 +88,7 @@ public class MyHashMap<K, E> {
             this.key = key;
             this.value = value;
             this.nextEntry = nextEntry;
-            this.hashCode = hashCode();
+            this.hashCode = hashCode;
 
         }
 
@@ -93,21 +98,21 @@ public class MyHashMap<K, E> {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        int countBuket = 0;
-//        String res = "{ ";
-//        for (Entry<K, E> bucket : arrayEntry) {
-//            res +="{ buket="+ countBuket + " ";
-//            while (bucket != null) {
-//                res += bucket.key + " = " + bucket.value + ", ";
-//                bucket = bucket.nextEntry;
-//            }
-//            res += "} \n " ;
-//            countBuket++;
-//        }
-//        return "MyHashMap{" + res
-//                +
-//                        '}' + " size= " + size;
-//    }
+    @Override
+    public String toString() {
+        int countBuket = 0;
+        String res = "{ ";
+        for (Entry<K, E> bucket : arrayEntry) {
+            res +="{ buket="+ countBuket + " ";
+            while (bucket != null) {
+                res += bucket.key + " = " + bucket.value + "= " + bucket.hashCode + ", " ;
+                bucket = bucket.nextEntry;
+            }
+            res += "} \n " ;
+            countBuket++;
+        }
+        return "MyHashMap{" + res
+                +
+                        '}' + " size= " + size;
+    }
 }

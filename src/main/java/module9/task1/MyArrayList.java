@@ -22,9 +22,10 @@ public class MyArrayList<E> {
     }
 
     public E remove(int index) {
-        Object oldElement =  elementData[index];
-        System.arraycopy(elementData, index + 1, elementData, index, size - index + 1);
-        elementData[size] = null;
+        Object oldElement = elementData[index];
+        System.arraycopy(elementData, index + 1 , elementData, index, size - index - 1);
+        System.out.println(this);
+        elementData[size -1] = null;
         size--;
         return (E) oldElement;
     }
@@ -36,12 +37,12 @@ public class MyArrayList<E> {
         size = 0;
     }
 
-    public int size (){
+    public int size() {
         return size;
     }
 
-    public E get (int index){
-        if (index >= size){
+    public E get(int index) {
+        if (index >= size) {
             throw new IndexOutOfBoundsException("You are out of Array");
         }
         return (E) elementData[index];
@@ -53,7 +54,7 @@ public class MyArrayList<E> {
 //                ", size=" + size +
 //                ", capacity=" + elementData.length +
 //                " elementData=" + Arrays.toString(elementData) +
-//                 '}';
+//                '}';
 //    }
 }
 
