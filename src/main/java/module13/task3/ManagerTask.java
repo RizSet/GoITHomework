@@ -36,4 +36,18 @@ public class ManagerTask {
                 .filter((task) -> !task.isCompleted())
                 .collect(Collectors.toList());
     }
+
+    public void printOpenTask(int userId, String url){
+        List<Task> openTask;
+
+        try {
+            openTask = getOpenTask(userId, url);
+        } catch (IOException|InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (Task task : openTask) {
+            System.out.println(task);
+        }
+    }
 }
